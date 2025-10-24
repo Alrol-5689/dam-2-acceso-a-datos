@@ -7,7 +7,7 @@ public class Main {
         
         OperacionesFicheros operaciones = new OperacionesFicheros();
 
-        // Primera lectura 
+        // Primera lectura s
 
         // operaciones.lecturaFicheros("src/main/resources/ficheros/escritura.txt");
         // operaciones.lecturaFicherosBuffer("src/main/resources/ficheros/ejemplo.txt");
