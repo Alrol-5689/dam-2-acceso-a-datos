@@ -7,6 +7,11 @@ public class Main {
         
         OperacionesFicheros operaciones = new OperacionesFicheros();
 
+        var pathEjemplo = "src/main/resources/ficheros/ejemplo.txt";
+        var pathEscritura = "src/main/resources/ficheros/escritura.txt";
+        var pathEscrituraBuffer =  "src/main/resources/ficheros/escrituraBuffer.txt";
+        var pathEscrituraObjetos = "src/main/resources/ficheros/escrituraObjetos.obj";
+
         // Primera lectura s
 
         // operaciones.lecturaFicheros("src/main/resources/ficheros/escritura.txt");
