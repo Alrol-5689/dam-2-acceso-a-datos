@@ -12,21 +12,24 @@ public class Main {
         var pathEscrituraBuffer =  "src/main/resources/ficheros/escrituraBuffer.txt";
         var pathEscrituraObjetos = "src/main/resources/ficheros/escrituraObjetos.obj";
 
-        // Primera lectura s
+//         Primera lectura s
+//
+//         operaciones.lecturaFicheros(pathEjemplo);
+//         operaciones.lecturaFicherosBuffer(pathEjemplo);
+//
+//         Escritura
 
-        // operaciones.lecturaFicheros("src/main/resources/ficheros/escritura.txt");
-        // operaciones.lecturaFicherosBuffer("src/main/resources/ficheros/ejemplo.txt");
+//         operaciones.escrituraSimple(pathEscritura);
+//         operaciones.escrituraCompleja(pathEscrituraBuffer);
+//         operaciones.escrituraObjetos(pathEscrituraObjetos);
+        operaciones.escrituraObjetosMultiple(pathEscrituraObjetos);
 
-        // Escritura
 
-        operaciones.escrituraSimple("src/main/resources/ficheros/escritura.txt");
-        // operaciones.escrituraCompleja("src/main/resources/ficheros/escrituraBuffer.txt");
-        // operaciones.escrituraObjetos("src/main/resources/ficheros/escrituraObjetos.obj");
+//         Segunda lectura
 
-        // Segunda lectura
-
-        operaciones.lecturaFicheros("src/main/resources/ficheros/escritura.txt");
-        // operaciones.lecturaFicherosBuffer("src/main/resources/ficheros/ejemplo.txt");
+         operaciones.lecturaObjeto2(pathEscrituraObjetos);
+//         operaciones.lecturaFicheros(pathEscritura);
+//         operaciones.lecturaFicherosBuffer(pathEjemplo);
         
     }
 }

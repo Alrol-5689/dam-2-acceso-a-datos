@@ -1,7 +1,7 @@
 # Eclipse
 # .project
 # .classpath
-# .settings/
+.settings/
 .metadata/
 
 # VS Code
@@ -14,11 +14,12 @@ out/
 
 # Librerías externas
 lib/*.jar
+*/Librerias/**/bin/
 
 # Archivos compilados
 *.class
 bin/
-/target/       
+target/       
 
 # Archivos temporales / sistema
 *.log

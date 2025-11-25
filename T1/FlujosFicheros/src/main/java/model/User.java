@@ -17,7 +17,7 @@ public class User implements Serializable {
   private String name, apellido, email, dni;
   private int telefono;
 
-  public User(int id, String name, String apellido) {
+  public User(int id, String name, String apellido, String mail, int i) {
     this.id = id;
     this.name = name;
     this.apellido = apellido;

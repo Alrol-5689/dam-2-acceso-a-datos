@@ -1,14 +1,8 @@
 package controller;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.User;
 
@@ -17,44 +11,36 @@ public class OperacionesFicheros {
     public void lecturaFicheros(String path) {
 
         File file = new File(path);
-        FileReader fileReader = null;
 
-        try {
-            fileReader = new FileReader(file);
-            int numero;
-            while ((numero = fileReader.read()) != -1) {
-                System.out.print((char) numero / 9);  
-            }
-        } catch (IOException e ) {
-            System.out.println("Error de lectura: " + e.getMessage());
-        } finally {
+        try (FileReader fileReader = new FileReader(file)) {
             try {
-                if (fileReader != null) fileReader.close();
-            } catch (IOException | NullPointerException e) {
-                System.out.println("Error al cerrar el fichero: " + e.getMessage());
+                int numero;
+                while ((numero = fileReader.read()) != -1) {
+                    System.out.print((char) (numero / 9));
+                }
+            } catch (IOException e) {
+                System.out.println("Error de lectura: " + e.getMessage());
             }
+        } catch (IOException | NullPointerException e) {
+            System.out.println("Error al cerrar el fichero: " + e.getMessage());
         }
     }
 
     public void lecturaFicherosBuffer(String path) {
 
         File file = new File(path);
-        BufferedReader bufferedReader = null;
 
-        try {
-            bufferedReader = new BufferedReader(new FileReader(file));
-            String linea = null;
-            while ((linea = bufferedReader.readLine()) != null) {
-                System.out.println(linea);  
-            }
-        } catch (IOException e ) {
-            System.out.println("Error de lectura: " + e.getMessage());
-        } finally {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             try {
-                if (bufferedReader != null) bufferedReader.close();
-            } catch (IOException | NullPointerException e) {
-                System.out.println("Error al cerrar el fichero: " + e.getMessage());
+                String linea = null;
+                while ((linea = bufferedReader.readLine()) != null) {
+                    System.out.println(linea);
+                }
+            } catch (IOException e) {
+                System.out.println("Error de lectura: " + e.getMessage());
             }
+        } catch (IOException | NullPointerException e) {
+            System.out.println("Error al cerrar el fichero: " + e.getMessage());
         }
 
     }
@@ -64,27 +50,24 @@ public class OperacionesFicheros {
         File file = new File(path);
         if (!file.exists()) {
             try {
+                //noinspection ResultOfMethodCallIgnored
                 file.createNewFile();
             } catch (IOException e) {
                 System.out.println("Error al crear el fichero: " + e.getMessage());
             }
         }
-        FileWriter fileWriter = null;
-        String mensaje = "El enunciado del examen es este: la primera pregunta es XXXXX";
-        try {
-            fileWriter = new FileWriter(file, true);
-            for (int i = 0; i < mensaje.length(); i++) {
-                char letra = mensaje.charAt(i);
-                fileWriter.write((int) letra * 9);
-            }
-        } catch (IOException e) {
-            System.out.println("Error de escritura: " + e.getMessage());
-        } finally {
+        String mensaje = "escrituraSimple() en escritura.txt";
+        try (FileWriter fileWriter = new FileWriter(file, true)) {
             try {
-                if (fileWriter != null) fileWriter.close();
-            } catch (IOException | NullPointerException e) {
-                System.out.println("Error al cerrar el fichero: " + e.getMessage());
+                for (int i = 0; i < mensaje.length(); i++) {
+                    char letra = mensaje.charAt(i);
+                    fileWriter.write((int) (letra * 9));
+                }
+            } catch (IOException e) {
+                System.out.println("Error de escritura: " + e.getMessage());
             }
+        } catch (IOException | NullPointerException e) {
+            System.out.println("Error al cerrar el fichero: " + e.getMessage());
         }
     }
 
@@ -118,14 +101,22 @@ public class OperacionesFicheros {
 
     public void escrituraObjetos(String path) {
         
-        User user1 = new User(1, "Juan", "Pérez", "juan@gmail.com", "12345678A", 600123456);
+        User user1 = new User(
+                1,
+                "Juan",
+                "Pérez",
+                "juan@gmail.com",
+                "12345678A",
+                600123456);
+
         File file = new File(path);
 
         if (!file.exists()) {
             try {
+                //noinspection ResultOfMethodCallIgnored
                 file.createNewFile();
             } catch (IOException e) {
-                System.out.println("Error al crear el fichero: " + e.getMessage());
+                System.out.println("Error al crear el fichero");
             }
         }
 
@@ -145,8 +136,51 @@ public class OperacionesFicheros {
                 System.out.println("Error al cerrar el fichero: " + e.getMessage());
             }
         }
+    }
 
-        
+    public void escrituraObjetosMultiple(String path) {
+        ArrayList<User> users = new ArrayList<>();
+        users.add(new User(1,"Juan1","Pérez","juan@gmail.com",600123456));
+        users.add(new User(2,"Juan2","Pérez","juan@gmail.com",600123456));
+        users.add(new User(3,"Juan3","Pérez","juan@gmail.com",600123456));
+        users.add(new User(4,"Juan4","Pérez","juan@gmail.com",600123456));
+        users.add(new User(5,"Juan5","Pérez","juan@gmail.com",600123456));
+        File file = new File(path);
+        if (!file.exists()) {
+            try {
+                //noinspection ResultOfMethodCallIgnored
+                file.createNewFile();
+            } catch (IOException e) {
+                System.out.println("Error al crear el fichero");
+            }
+        }
+        ObjectOutputStream dos = null;
+        try {
+            dos = new ObjectOutputStream(new FileOutputStream(file));
+            dos.writeObject(users);
+        } catch (FileNotFoundException e) {
+            System.out.println("Fichero indicado incorrecto");
+        } catch (IOException e) {
+            System.out.println("No puedes escribir");
+        }
+    }
+
+    public void lecturaObjeto2(String path) {
+        File file = new File(path);
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+            try {
+                ArrayList<User> users = (ArrayList<User>) ois.readObject();
+                for (User u : users) {
+                    System.out.println(u);
+                }
+            } catch (IOException | ClassNotFoundException e) {
+                System.out.println("Error al leer el fichero");
+            }
+        } catch (IOException e) {
+            System.out.println("Error al cerrar el fichero");
+        }
+
+
     }
 
 }
